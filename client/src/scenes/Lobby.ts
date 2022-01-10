@@ -70,6 +70,8 @@ export default class Lobby extends Scene {
         .anims.play(`receptionist_${id % 2}`)
     })
 
+    // import other objects from Tiled map to Phaser
+    this.addGroupFromTiled('Wall', 'tiles_wall', 'FloorAndGround', false)
     this.addGroupFromTiled('ClassroomObjects', 'classroom', 'Classroom_and_library', false)
     this.addGroupFromTiled(
       'UpstairsObjects',

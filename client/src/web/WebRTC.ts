@@ -59,11 +59,11 @@ export default class WebRTC {
   checkPreviousPermission() {
     const permissionName = 'microphone' as PermissionName
     navigator.permissions.query({ name: permissionName }).then((result) => {
-      if (result.state === 'granted') this.getUserMedia()
+      if (result.state === 'granted') this.getUserMedia(false)
     })
   }
 
-  getUserMedia() {
+  getUserMedia(alertOnError = true) {
     // ask the browser to get user media
     navigator.mediaDevices
       ?.getUserMedia({
@@ -78,8 +78,7 @@ export default class WebRTC {
         network.videoConnected()
       })
       .catch((error) => {
-        store.dispatch(setVideoConnected(false))
-        window.alert('No webcam or microphone found, or permission is blocked')
+        if (alertOnError) window.alert('No webcam or microphone found, or permission is blocked')
       })
   }
 

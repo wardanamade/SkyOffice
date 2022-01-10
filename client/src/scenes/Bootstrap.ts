@@ -119,12 +119,11 @@ export default class Bootstrap extends Phaser.Scene {
 
   launchGame() {
     if (!this.preloadComplete) return
-    network.webRTC?.checkPreviousPermission()
     this.scene.launch('lobby', { onLeave: this.handleEnterOffice })
     this.currentScene = this.scene.get('lobby') as Lobby
 
-    // update Redux state
     store.dispatch(setRoomJoined(true))
+    network.webRTC?.checkPreviousPermission()
   }
 
   changeBackgroundMode(backgroundMode: BackgroundMode) {

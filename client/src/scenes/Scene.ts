@@ -31,7 +31,7 @@ export default class Scene extends Phaser.Scene {
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
   private keyE!: Phaser.Input.Keyboard.Key
   private keyR!: Phaser.Input.Keyboard.Key
-  onLeave!: (teleportZone?: TeleportZone) => void
+  onLeave!: ISceneData['onLeave']
 
   create(data: ISceneData) {
     if (!network) {
@@ -60,6 +60,7 @@ export default class Scene extends Phaser.Scene {
     this.otherPlayers = this.physics.add.group({ classType: OtherPlayer })
 
     this.cameras.main.zoom = 1.5
+    this.cameras.main.fadeIn(1000)
     this.cameras.main.startFollow(this.myPlayer, true)
 
     const teleportZoneGroup = this.physics.add.staticGroup({ classType: TeleportZone })
@@ -117,13 +118,12 @@ export default class Scene extends Phaser.Scene {
     })
     this.input.keyboard.on('keydown-ESC', () => store.dispatch(setShowChat(false)))
 
-    // Disable keys when not loggedIn and during the beginning 0.5 seconds
+    // Disable keys when not loggedIn and during the fade in animation
     // (to prevent rapid entering and leaving scenes)
     this.disableKeys()
     if (store.getState().user.loggedIn) {
-      this.time.addEvent({
-        delay: 500,
-        callback: () => this.enableKeys(),
+      this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_IN_COMPLETE, (cam, effect) => {
+        this.enableKeys()
       })
     }
   }
@@ -156,7 +156,7 @@ export default class Scene extends Phaser.Scene {
   }
 
   private handlePlayersOverlap(myPlayer, otherPlayer) {
-    otherPlayer.makeCall(myPlayer)
+    otherPlayer.makeCall()
   }
 
   // function to add new player to the otherPlayer group

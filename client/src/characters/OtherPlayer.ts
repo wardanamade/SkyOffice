@@ -1,16 +1,15 @@
 import Phaser from 'phaser'
 import Player from './Player'
-import MyPlayer from './MyPlayer'
 import { sittingShiftData } from './Player'
 
 import network from '../services/Network'
+import store from '../stores'
 
 export default class OtherPlayer extends Player {
   private targetPosition: [number, number]
   private lastUpdateTimestamp?: number
   private connectionBufferTime = 0
   private connected = false
-  private myPlayer?: MyPlayer
 
   constructor(
     scene: Phaser.Scene,
@@ -30,15 +29,15 @@ export default class OtherPlayer extends Player {
     this.playerName.setText(name)
   }
 
-  makeCall(myPlayer: MyPlayer) {
-    this.myPlayer = myPlayer
+  makeCall() {
+    const { loggedIn, videoConnected } = store.getState().user
     if (
       !this.connected &&
       this.connectionBufferTime >= 750 &&
-      myPlayer.readyToConnect &&
       this.readyToConnect &&
-      myPlayer.videoConnected &&
-      myPlayer.webRTCId > this.webRTCId
+      loggedIn &&
+      videoConnected &&
+      network.webRTCId > this.webRTCId
     ) {
       network.webRTC?.connectToNewUser(this.webRTCId)
       this.connected = true
@@ -161,7 +160,6 @@ export default class OtherPlayer extends Player {
       this.body.touching.none &&
       this.connectionBufferTime >= 750
     ) {
-      if (this.x < 610 && this.y > 515 && this.myPlayer!.x < 610 && this.myPlayer!.y > 515) return
       network.playerStreamDisconnect(this.playerId, this.webRTCId)
       this.connectionBufferTime = 0
       this.connected = false
@@ -219,7 +217,7 @@ Phaser.GameObjects.GameObjectFactory.register(
 
     this.scene.physics.world.enableBody(sprite, Phaser.Physics.Arcade.DYNAMIC_BODY)
 
-    const collisionScale = [6, 4]
+    const collisionScale = [9, 6]
     sprite.body
       .setSize(sprite.width * collisionScale[0], sprite.height * collisionScale[1])
       .setOffset(

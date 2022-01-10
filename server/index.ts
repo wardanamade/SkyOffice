@@ -23,14 +23,14 @@ const gameServer = new Server({ server })
 gameServer.define(RoomType.COLYSEUS_LOBBYROOM, LobbyRoom)
 gameServer.define(RoomType.LOBBY, SkyOffice, {
   name: 'Public Lobby',
-  roomNumber: null,
+  roomNumber: '',
   description: 'Public area for everyone to connect and relax',
   password: null,
   autoDispose: false,
 })
 gameServer.define(RoomType.PUBLIC, SkyOffice, {
   name: "SkyOffice's Office",
-  roomNumber: null,
+  roomNumber: '',
   description:
     'This is to showcase how office space looks like, go to the lobby to register one for free!',
   password: null,

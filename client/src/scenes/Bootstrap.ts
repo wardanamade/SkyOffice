@@ -7,6 +7,7 @@ import TeleportZone from '../zones/TeleportZone'
 import network from '../services/Network'
 import store from '../stores'
 import { setRoomJoined } from '../stores/RoomStore'
+import { resetChat } from '../stores/ChatStore'
 
 export default class Bootstrap extends Phaser.Scene {
   currentScene?: Office | Lobby
@@ -136,6 +137,7 @@ export default class Bootstrap extends Phaser.Scene {
 
     this.scene.stop('office')
     network.leave()
+    store.dispatch(resetChat())
     this.scene.launch('lobby', { onLeave: this.handleEnterOffice, enterX: x, enterY: y })
     this.currentScene = this.scene.get('lobby') as Lobby
   }
@@ -145,6 +147,7 @@ export default class Bootstrap extends Phaser.Scene {
 
     this.scene.stop('lobby')
     network.leave()
+    store.dispatch(resetChat())
     this.scene.launch('office', {
       onLeave: this.handleEnterLobby,
       teleportTo: teleportZone.teleportTo,

@@ -27,6 +27,11 @@ export default class Office extends Scene {
       console.error('Missing office destination')
     }
 
+    // Have my player plays facing up animation
+    const parts = this.myPlayer.anims.currentAnim.key.split('_')
+    parts[2] = 'up'
+    this.myPlayer.play(parts.join('_'), true)
+
     const FloorAndGround = this.map.addTilesetImage('FloorAndGround', 'tiles_wall')
     const groundLayer = this.map
       .createLayer('Ground', FloorAndGround)
@@ -77,11 +82,6 @@ export default class Office extends Scene {
     this.addGroupFromTiled('GenericObjects', 'generic', 'Generic', false)
     this.addGroupFromTiled('GenericObjectsOnCollide', 'generic', 'Generic', true)
     this.addGroupFromTiled('Basement', 'basement', 'Basement', true)
-
-    // Have my player plays facing up animation
-    const parts = this.myPlayer.anims.currentAnim.key.split('_')
-    parts[2] = 'up'
-    this.myPlayer.play(parts.join('_'), true)
 
     this.physics.add.collider([this.myPlayer, this.myPlayer.playerContainer], groundLayer)
     this.physics.add.overlap(

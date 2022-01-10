@@ -169,6 +169,8 @@ export default function Chat() {
   const chatMessages = useAppSelector((state) => state.chat.chatMessages)
   const focused = useAppSelector((state) => state.chat.focused)
   const showChat = useAppSelector((state) => state.chat.showChat)
+  const roomNumber = useAppSelector((state) => state.room.roomNumber)
+  const roomName = useAppSelector((state) => state.room.roomName)
   const dispatch = useAppDispatch()
   const currentScene = (phaserGame.scene.keys.bootstrap as Bootstrap).currentScene
 
@@ -217,7 +219,7 @@ export default function Chat() {
         {showChat ? (
           <>
             <ChatHeader>
-              <h3>Chat</h3>
+              <h3>Chat ({roomNumber ? `Office-${roomNumber}` : roomName})</h3>
               <IconButton
                 aria-label="close dialog"
                 className="close"

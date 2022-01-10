@@ -80,6 +80,7 @@ class Network {
     }
     this.room = await this.client.joinOrCreate(RoomType.LOBBY, options)
     this.initialize()
+    if (name) store.dispatch(pushPlayerJoinedMessage(name))
   }
 
   // method to join an office
@@ -105,6 +106,7 @@ class Network {
       })
     }
     this.initialize()
+    if (name) store.dispatch(pushPlayerJoinedMessage(name))
   }
 
   // method to leave current room and remove all event listeners and reset webRTC

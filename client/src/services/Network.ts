@@ -64,6 +64,13 @@ class Network {
     this.lobby.onMessage('-', (roomId) => {
       store.dispatch(removeAvailableRooms(roomId))
     })
+
+    // this gets triggered when Heroku free dyno cuts the websocket connection
+    // when client is inactive for too long
+    this.lobby.onLeave((code) => {
+      console.log('Lobby onLeave code:', code)
+      window.alert('Server connection is dropped due to inactivity, please reload the page.')
+    })
   }
 
   // method to join the public lobby
@@ -110,12 +117,12 @@ class Network {
   }
 
   // method to leave current room and remove all event listeners and reset webRTC
-  leave() {
-    this.room?.leave()
-    this.room = null
-    this.mySessionId = null
+  async leave() {
     this.webRTC.reset()
     this.events.removeAllListeners()
+    await this.room?.leave()
+    this.room = null
+    this.mySessionId = null
   }
 
   // method to join a custom room

@@ -131,21 +131,21 @@ export default class Bootstrap extends Phaser.Scene {
     this.launchBackground(backgroundMode)
   }
 
-  private handleEnterLobby = () => {
+  private handleEnterLobby = async () => {
     const { x, y } = this.lobbyReturnPosition!
 
     this.scene.stop('office')
-    network.leave()
+    await network.leave()
     store.dispatch(resetChat())
     this.scene.launch('lobby', { onLeave: this.handleEnterOffice, enterX: x, enterY: y })
     this.currentScene = this.scene.get('lobby') as Lobby
   }
 
-  private handleEnterOffice = (teleportZone: TeleportZone) => {
+  private handleEnterOffice = async (teleportZone: TeleportZone) => {
     this.lobbyReturnPosition = teleportZone.getBottomCenter()
 
     this.scene.stop('lobby')
-    network.leave()
+    await network.leave()
     store.dispatch(resetChat())
     this.scene.launch('office', {
       onLeave: this.handleEnterLobby,

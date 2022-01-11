@@ -160,13 +160,15 @@ export class SkyOffice extends Room<OfficeState> {
     })
   }
 
-  async onAuth(client: Client, options: { password: string | null }) {
+  async onAuth(client: Client, options: IRoomData) {
     if (this.password) {
       const validPassword = await bcrypt.compare(options.password, this.password)
-      if (!validPassword) {
-        throw new ServerError(403, 'Password is incorrect!')
-      }
+      if (!validPassword) throw new ServerError(403, 'Password is incorrect!')
     }
+    for (const { webRTCId } of this.state.players.values()) {
+      if (webRTCId === options.webRTCId) throw new ServerError(403, 'Duplicated user!')
+    }
+
     return true
   }
 

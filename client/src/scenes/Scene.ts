@@ -162,7 +162,10 @@ export default class Scene extends Phaser.Scene {
 
   // function to add new player to the otherPlayer group
   private handlePlayerJoined(newPlayer: IPlayer, id: string) {
-    if (this.otherPlayerMap.has(id)) this.otherPlayerMap.get(id)?.destroy()
+    if (this.otherPlayerMap.has(id)) {
+      this.otherPlayerMap.get(id)?.destroy()
+      console.log('other player duplicated')
+    }
     const otherPlayer = new OtherPlayer(
       this,
       newPlayer.x,
@@ -228,6 +231,7 @@ export default class Scene extends Phaser.Scene {
   }
 
   private handlePlayerTeleportZoneOverlap(myPlayer, teleportZone) {
+    this.registry.destroy()
     this.onLeave(teleportZone)
   }
 }

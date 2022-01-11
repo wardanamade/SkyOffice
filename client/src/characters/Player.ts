@@ -39,6 +39,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
   ) {
     super(scene, x, y, texture, frame)
 
+    scene.add.existing(this)
+    scene.physics.world.enableBody(this, Phaser.Physics.Arcade.DYNAMIC_BODY)
     this.playerTexture = texture
     this.playerId = id
     this.webRTCId = webRTCId

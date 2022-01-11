@@ -14,6 +14,26 @@ export default class MyPlayer extends Player {
   private chairOnSit?: Chair
   escalatorOnTouch?: Phaser.GameObjects.Sprite
 
+  constructor(
+    scene: Phaser.Scene,
+    x: number,
+    y: number,
+    texture: string,
+    id: string,
+    webRTCId: string,
+    name: string,
+    readyToConnect: boolean,
+    videoConnected: boolean,
+    frame?: string | number
+  ) {
+    super(scene, x, y, texture, id, webRTCId, name, readyToConnect, videoConnected, frame)
+
+    const collisionScale = [0.5, 0.2]
+    this.body
+      .setSize(this.width * collisionScale[0], this.height * collisionScale[1])
+      .setOffset(this.width * (1 - collisionScale[0]) * 0.5, this.height * (1 - collisionScale[1]))
+  }
+
   setPlayerName(name: string) {
     this.playerName.setText(name)
     network.updatePlayerName(name)
@@ -170,65 +190,3 @@ export default class MyPlayer extends Player {
     network.updatePlayer(this.x, this.y, this.anims.currentAnim.key)
   }
 }
-
-declare global {
-  namespace Phaser.GameObjects {
-    interface GameObjectFactory {
-      myPlayer(
-        x: number,
-        y: number,
-        texture: string,
-        id: string,
-        webRTCId: string,
-        name: string,
-        readyToConnect: boolean,
-        videoConnected: boolean,
-        frame?: string | number
-      ): MyPlayer
-    }
-  }
-}
-
-Phaser.GameObjects.GameObjectFactory.register(
-  'myPlayer',
-  function (
-    this: Phaser.GameObjects.GameObjectFactory,
-    x: number,
-    y: number,
-    texture: string,
-    id: string,
-    webRTCId: string,
-    name: string,
-    readyToConnect: boolean,
-    videoConnected: boolean,
-    frame?: string | number
-  ) {
-    const sprite = new MyPlayer(
-      this.scene,
-      x,
-      y,
-      texture,
-      id,
-      webRTCId,
-      name,
-      readyToConnect,
-      videoConnected,
-      frame
-    )
-
-    this.displayList.add(sprite)
-    this.updateList.add(sprite)
-
-    this.scene.physics.world.enableBody(sprite, Phaser.Physics.Arcade.DYNAMIC_BODY)
-
-    const collisionScale = [0.5, 0.2]
-    sprite.body
-      .setSize(sprite.width * collisionScale[0], sprite.height * collisionScale[1])
-      .setOffset(
-        sprite.width * (1 - collisionScale[0]) * 0.5,
-        sprite.height * (1 - collisionScale[1])
-      )
-
-    return sprite
-  }
-)

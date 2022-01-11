@@ -26,7 +26,13 @@ export default class OtherPlayer extends Player {
     super(scene, x, y, texture, id, webRTCId, name, readyToConnect, videoConnected, frame)
     this.targetPosition = [x, y]
 
-    this.playerName.setText(name)
+    const collisionScale = [9, 6]
+    this.body
+      .setSize(this.width * collisionScale[0], this.height * collisionScale[1])
+      .setOffset(
+        this.width * (1 - collisionScale[0]) * 0.5,
+        this.height * (1 - collisionScale[1]) * 0.5 + 17
+      )
   }
 
   makeCall() {
@@ -166,65 +172,3 @@ export default class OtherPlayer extends Player {
     }
   }
 }
-
-declare global {
-  namespace Phaser.GameObjects {
-    interface GameObjectFactory {
-      otherPlayer(
-        x: number,
-        y: number,
-        texture: string,
-        id: string,
-        webRTCId: string,
-        name: string,
-        readyToConnect: boolean,
-        videoConnected: boolean,
-        frame?: string | number
-      ): OtherPlayer
-    }
-  }
-}
-
-Phaser.GameObjects.GameObjectFactory.register(
-  'otherPlayer',
-  function (
-    this: Phaser.GameObjects.GameObjectFactory,
-    x: number,
-    y: number,
-    texture: string,
-    id: string,
-    webRTCId: string,
-    name: string,
-    readyToConnect: boolean,
-    videoConnected: boolean,
-    frame?: string | number
-  ) {
-    const sprite = new OtherPlayer(
-      this.scene,
-      x,
-      y,
-      texture,
-      id,
-      webRTCId,
-      name,
-      readyToConnect,
-      videoConnected,
-      frame
-    )
-
-    this.displayList.add(sprite)
-    this.updateList.add(sprite)
-
-    this.scene.physics.world.enableBody(sprite, Phaser.Physics.Arcade.DYNAMIC_BODY)
-
-    const collisionScale = [9, 6]
-    sprite.body
-      .setSize(sprite.width * collisionScale[0], sprite.height * collisionScale[1])
-      .setOffset(
-        sprite.width * (1 - collisionScale[0]) * 0.5,
-        sprite.height * (1 - collisionScale[1]) * 0.5 + 17
-      )
-
-    return sprite
-  }
-)

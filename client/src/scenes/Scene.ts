@@ -45,7 +45,8 @@ export default class Scene extends Phaser.Scene {
     this.registerKeys()
 
     const { name, texture, videoConnected, loggedIn } = store.getState().user
-    this.myPlayer = this.add.myPlayer(
+    this.myPlayer = new MyPlayer(
+      this,
       data.enterX || 0,
       data.enterY || 0,
       texture || 'adam',
@@ -161,7 +162,9 @@ export default class Scene extends Phaser.Scene {
 
   // function to add new player to the otherPlayer group
   private handlePlayerJoined(newPlayer: IPlayer, id: string) {
-    const otherPlayer = this.add.otherPlayer(
+    if (this.otherPlayerMap.has(id)) this.otherPlayerMap.get(id)?.destroy()
+    const otherPlayer = new OtherPlayer(
+      this,
       newPlayer.x,
       newPlayer.y,
       newPlayer.anim.split('_')[0],

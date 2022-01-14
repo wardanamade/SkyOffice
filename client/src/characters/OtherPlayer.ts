@@ -8,7 +8,7 @@ import store from '../stores'
 export default class OtherPlayer extends Player {
   private targetPosition: [number, number]
   private lastUpdateTimestamp?: number
-  private connectionBufferTime = -750
+  private connectionBufferTime = 0
   private connected = false
 
   constructor(

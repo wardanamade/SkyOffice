@@ -31,64 +31,36 @@ export default class Scene extends Phaser.Scene {
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
   private keyE!: Phaser.Input.Keyboard.Key
   private keyR!: Phaser.Input.Keyboard.Key
-  onLeave!: ISceneData['onLeave']
+  private teleportZoneGroup!: Phaser.Physics.Arcade.StaticGroup
+  private sceneData!: ISceneData
 
   create(data: ISceneData) {
     if (!network) {
       throw new Error('server instance missing')
     }
 
-    this.onLeave = data.onLeave
+    this.sceneData = data
 
     createCharacterAnims(this.anims)
     createItemAnims(this.anims)
     this.registerKeys()
 
-    const { name, texture, videoConnected, loggedIn } = store.getState().user
-    this.myPlayer = new MyPlayer(
-      this,
-      data.enterX || 0,
-      data.enterY || 0,
-      texture || 'adam',
-      network.mySessionId || '',
-      network.webRTCId,
-      name,
-      loggedIn,
-      videoConnected
-    )
     this.playerSelector = new PlayerSelector(this, 0, 0, 16, 16)
 
     this.otherPlayers = this.physics.add.group({ classType: OtherPlayer })
 
     this.cameras.main.zoom = 1.5
     this.cameras.main.fadeIn(1000)
-    this.cameras.main.startFollow(this.myPlayer, true)
 
-    const teleportZoneGroup = this.physics.add.staticGroup({ classType: TeleportZone })
+    this.teleportZoneGroup = this.physics.add.staticGroup({ classType: TeleportZone })
     const teleportZoneLayer = this.map.getObjectLayer('TeleportZones')
     teleportZoneLayer?.objects.forEach((object) => {
       const { x, y, width, height } = object
       // custom properties[0] is the teleportTo property specified in Tiled
       const teleportTo = object.properties[0].value
       const teleportZone = new TeleportZone(this, x!, y!, width!, height!, teleportTo).setOrigin(0)
-      teleportZoneGroup.add(teleportZone)
+      this.teleportZoneGroup.add(teleportZone)
     })
-
-    this.physics.add.overlap(
-      this.myPlayer,
-      teleportZoneGroup,
-      this.handlePlayerTeleportZoneOverlap,
-      undefined,
-      this
-    )
-
-    this.physics.add.overlap(
-      this.myPlayer,
-      this.otherPlayers,
-      this.handlePlayersOverlap,
-      undefined,
-      this
-    )
 
     // register network event listeners
     network.onPlayerJoined(this.handlePlayerJoined, this)
@@ -102,7 +74,7 @@ export default class Scene extends Phaser.Scene {
   }
 
   update() {
-    if (this.myPlayer) {
+    if (this.myPlayer && network.mySessionId) {
       this.playerSelector.update(this.myPlayer, this.cursors)
       this.myPlayer.update(this.playerSelector, this.cursors, this.keyE, this.keyR)
     }
@@ -127,6 +99,38 @@ export default class Scene extends Phaser.Scene {
         this.enableKeys()
       })
     }
+  }
+
+  spawnMyPlayer() {
+    const { name, texture, videoConnected, loggedIn } = store.getState().user
+    this.myPlayer = new MyPlayer(
+      this,
+      this.sceneData.enterX || 0,
+      this.sceneData.enterY || 0,
+      texture || 'adam',
+      network.mySessionId || '',
+      network.webRTCId,
+      name,
+      loggedIn,
+      videoConnected
+    )
+    this.cameras.main.startFollow(this.myPlayer, true)
+
+    this.physics.add.overlap(
+      this.myPlayer,
+      this.teleportZoneGroup,
+      this.handlePlayerTeleportZoneOverlap,
+      undefined,
+      this
+    )
+
+    this.physics.add.overlap(
+      this.myPlayer,
+      this.otherPlayers,
+      this.handlePlayersOverlap,
+      undefined,
+      this
+    )
   }
 
   disableKeys() {
@@ -162,10 +166,6 @@ export default class Scene extends Phaser.Scene {
 
   // function to add new player to the otherPlayer group
   private handlePlayerJoined(newPlayer: IPlayer, id: string) {
-    if (this.otherPlayerMap.has(id)) {
-      this.otherPlayerMap.get(id)?.destroy()
-      console.log('other player duplicated')
-    }
     const otherPlayer = new OtherPlayer(
       this,
       newPlayer.x,
@@ -232,6 +232,6 @@ export default class Scene extends Phaser.Scene {
 
   private handlePlayerTeleportZoneOverlap(myPlayer, teleportZone) {
     this.registry.destroy()
-    this.onLeave(teleportZone)
+    this.sceneData.onLeave(teleportZone)
   }
 }

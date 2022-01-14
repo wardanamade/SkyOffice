@@ -15,6 +15,7 @@ export default class Lobby extends Scene {
     } else {
       await network.joinOrCreateLobby()
     }
+    this.spawnMyPlayer()
 
     const FloorAndGround = this.map.addTilesetImage('FloorAndGround', 'tiles_wall')
     const Upstairs = this.map.addTilesetImage('UpstairsConnectorsStairsAndOthers', 'upstairs')
@@ -30,7 +31,7 @@ export default class Lobby extends Scene {
       .setCollisionByProperty({ collides: true })
 
     this.map.createLayer('MidDepth', Upstairs).setDepth(-5000)
-    this.map.createLayer('HighDepth', FloorAndGround).setDepth(10000)
+    this.map.createLayer('HighDepth', FloorAndGround).setDepth(5000)
 
     const colliderGroup = this.physics.add.staticGroup()
     const colliderLayer = this.map.getObjectLayer('Colliders')

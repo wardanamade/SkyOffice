@@ -26,6 +26,7 @@ export default class Office extends Scene {
     } else {
       console.error('Missing office destination')
     }
+    this.spawnMyPlayer()
 
     // Have my player plays facing up animation
     const parts = this.myPlayer.anims.currentAnim.key.split('_')

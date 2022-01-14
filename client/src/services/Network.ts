@@ -23,9 +23,9 @@ import { setWhiteboardUrls } from '../stores/WhiteboardStore'
 
 class Network {
   private client: Client
-  private room: Room<IOfficeState> | null = null
   private lobby!: Room
   private events: Phaser.Events.EventEmitter
+  room: Room<IOfficeState> | null = null
   mySessionId: string | null = null
   webRTC!: WebRTC
   webRTCId!: string

@@ -21,7 +21,7 @@ export default class Office extends Scene {
     this.map = this.make.tilemap({ key: 'tilemap' })
     super.create(data)
 
-    if (data.teleportTo) {
+    if (data.teleportTo && !network.room) {
       await network.joinOffice(data.teleportTo)
     } else {
       console.error('Missing office destination')

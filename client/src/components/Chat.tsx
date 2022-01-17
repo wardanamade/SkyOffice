@@ -23,16 +23,17 @@ const Backdrop = styled.div`
   position: fixed;
   bottom: 0;
   left: 0;
-  height: 400px;
-  width: 500px;
+  height: 360px;
+  width: 480px;
   max-height: 50%;
   max-width: 50%;
+  z-index: 1;
 `
 
 const Wrapper = styled.div`
   position: relative;
   height: 100%;
-  padding: 16px;
+  padding: 0 0 16px 16px;
   display: flex;
   flex-direction: column;
 `

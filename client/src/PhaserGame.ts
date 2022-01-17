@@ -11,8 +11,6 @@ const config: Phaser.Types.Core.GameConfig = {
   pixelArt: true, // Prevent pixel art from becoming blurred when scaled.
   scale: {
     mode: Phaser.Scale.ScaleModes.RESIZE,
-    width: window.innerWidth,
-    height: window.innerHeight,
   },
   physics: {
     default: 'arcade',
@@ -20,6 +18,9 @@ const config: Phaser.Types.Core.GameConfig = {
       gravity: { y: 0 },
       debug: false,
     },
+  },
+  dom: {
+    createContainer: true,
   },
   autoFocus: true,
   scene: [Bootstrap, Background, Office, Lobby],

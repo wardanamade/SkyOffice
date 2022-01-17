@@ -10,12 +10,13 @@ const Backdrop = styled.div`
   position: fixed;
   top: 0;
   left: 0;
+  z-index: 1;
 `
 
 const Wrapper = styled.div`
   width: 100%;
   height: 100%;
-  padding: 16px;
+  padding: 16px 0 0 16px;
   position: relative;
   display: flex;
   flex-direction: column;

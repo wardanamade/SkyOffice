@@ -10,11 +10,18 @@ import WhiteboardDialog from './components/WhiteboardDialog'
 import VideoConnectionDialog from './components/VideoConnectionDialog'
 import Chat from './components/Chat'
 import HelperButtonGroup from './components/HelperButtonGroup'
+import OfficeDeskDialogs from './components/OfficeDeskDialogs'
 
 const Backdrop = styled.div`
   position: absolute;
   height: 100%;
   width: 100%;
+`
+
+const PhaserContainer = styled.div`
+  canvas {
+    display: block;
+  }
 `
 
 function App() {
@@ -51,11 +58,16 @@ function App() {
   }
 
   return (
-    <Backdrop>
-      {ui}
-      {/* Render HelperButtonGroup if no dialogs are opened. */}
-      {!computerDialogOpen && !whiteboardDialogOpen && <HelperButtonGroup />}
-    </Backdrop>
+    <>
+      <Backdrop>
+        {ui}
+        {/* Render HelperButtonGroup if no dialogs are opened. */}
+        {!computerDialogOpen && !whiteboardDialogOpen && <HelperButtonGroup />}
+      </Backdrop>
+
+      <OfficeDeskDialogs />
+      <PhaserContainer id="phaser-container" />
+    </>
   )
 }
 

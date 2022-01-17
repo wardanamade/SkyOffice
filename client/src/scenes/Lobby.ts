@@ -71,6 +71,16 @@ export default class Lobby extends Scene {
         .anims.play(`receptionist_${id % 2}`)
     })
 
+    const dialogLayer = this.map.getObjectLayer('OfficeDeskDialogs')
+    dialogLayer.objects.forEach((object) => {
+      const { x, y } = object
+      const elementId = object.properties[0].value
+
+      const dom = this.add.dom(0, 0, `#${elementId}`).setOrigin(0)
+      dom.ignoreDestroy = true
+      dom.setPosition(x!, y! - dom.height)
+    })
+
     // import other objects from Tiled map to Phaser
     this.addGroupFromTiled('Wall', 'tiles_wall', 'FloorAndGround', false)
     this.addGroupFromTiled('ClassroomObjects', 'classroom', 'Classroom_and_library', false)

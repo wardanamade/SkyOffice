@@ -26,6 +26,7 @@ const Backdrop = styled.div`
   bottom: 16px;
   right: 16px;
   align-items: flex-end;
+  z-index: 1;
 
   .wrapper-group {
     display: flex;

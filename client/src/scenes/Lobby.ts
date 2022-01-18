@@ -31,7 +31,7 @@ export default class Lobby extends Scene {
       .setCollisionByProperty({ collides: true })
 
     this.map.createLayer('MidDepth', Upstairs).setDepth(-5000)
-    this.map.createLayer('HighDepth', FloorAndGround).setDepth(5000)
+    this.map.createLayer('HighDepth', [FloorAndGround, Upstairs]).setDepth(5000)
 
     const colliderGroup = this.physics.add.staticGroup()
     const colliderLayer = this.map.getObjectLayer('Colliders')

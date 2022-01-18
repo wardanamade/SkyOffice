@@ -20,8 +20,12 @@ const colorArr = [
 ]
 
 // determine name color by first character charCode
-export function getColorByString(string: string) {
-  return colorArr[Math.floor(string.charCodeAt(0) % colorArr.length)]
+export function getColorByString(input: string | number) {
+  if (typeof input === 'string') {
+    return colorArr[Math.floor(input.charCodeAt(0) % colorArr.length)]
+  } else {
+    return colorArr[Math.floor(input % colorArr.length)]
+  }
 }
 
 export function getAvatarString(name: string) {

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.7.0" orientation="orthogonal" renderorder="right-down" width="40" height="30" tilewidth="32" tileheight="32" infinite="1" nextlayerid="22" nextobjectid="3437">
+<map version="1.5" tiledversion="1.7.0" orientation="orthogonal" renderorder="right-down" width="40" height="30" tilewidth="32" tileheight="32" infinite="1" nextlayerid="22" nextobjectid="3443">
  <editorsettings>
   <export target="lobby.json" format="json"/>
  </editorsettings>
@@ -8001,7 +8001,7 @@
   <object id="3428" gid="4433" x="448" y="672" width="32" height="32"/>
   <object id="3429" gid="4394" x="448" y="640" width="32" height="32"/>
  </objectgroup>
- <objectgroup id="20" name="OfficeDeskDialogs">
+ <objectgroup id="20" name="OfficeDeskDialogs" visible="0">
   <object id="3228" x="-400" y="-952">
    <properties>
     <property name="elementId" value="dialog-A4"/>
@@ -8282,22 +8282,22 @@
   <object id="3405" gid="6004" x="512" y="576" width="32" height="64"/>
  </objectgroup>
  <objectgroup id="16" name="ClassroomObjects">
-  <object id="2605" gid="6192" x="-96" y="-96" width="32" height="32"/>
-  <object id="2606" gid="6193" x="-64" y="-96" width="32" height="32"/>
-  <object id="2607" gid="6209" x="-64" y="-64" width="32" height="32"/>
-  <object id="2608" gid="6208" x="-96" y="-64" width="32" height="32"/>
-  <object id="2609" gid="6224" x="-96" y="-32" width="32" height="32"/>
-  <object id="2610" gid="6225" x="-64" y="-32" width="32" height="32"/>
-  <object id="2611" gid="6226" x="-32" y="-32" width="32" height="32"/>
-  <object id="2612" gid="6241" x="0" y="-64" width="32" height="32"/>
-  <object id="2613" gid="6226" x="0" y="-32" width="32" height="32"/>
-  <object id="2614" gid="6227" x="32" y="-32" width="32" height="32"/>
-  <object id="2615" gid="6211" x="64" y="-64" width="32" height="32"/>
-  <object id="2616" gid="6227" x="64" y="-32" width="32" height="32"/>
-  <object id="2617" gid="6228" x="96" y="-32" width="32" height="32"/>
-  <object id="2618" gid="6212" x="96" y="-64" width="32" height="32"/>
-  <object id="2619" gid="6196" x="96" y="-96" width="32" height="32"/>
-  <object id="2620" gid="6195" x="64" y="-96" width="32" height="32"/>
+  <object id="2605" gid="6192" x="-96" y="-128" width="32" height="32"/>
+  <object id="2606" gid="6193" x="-64" y="-128" width="32" height="32"/>
+  <object id="2607" gid="6209" x="-64" y="-96" width="32" height="32"/>
+  <object id="2608" gid="6208" x="-96" y="-96" width="32" height="32"/>
+  <object id="2609" gid="6224" x="-96" y="-64" width="32" height="32"/>
+  <object id="2610" gid="6225" x="-64" y="-64" width="32" height="32"/>
+  <object id="2611" gid="6226" x="-32" y="-64" width="32" height="32"/>
+  <object id="2612" gid="6241" x="0" y="-96" width="32" height="32"/>
+  <object id="2613" gid="6226" x="0" y="-64" width="32" height="32"/>
+  <object id="2614" gid="6227" x="32" y="-64" width="32" height="32"/>
+  <object id="2615" gid="6211" x="64" y="-96" width="32" height="32"/>
+  <object id="2616" gid="6227" x="64" y="-64" width="32" height="32"/>
+  <object id="2617" gid="6228" x="96" y="-64" width="32" height="32"/>
+  <object id="2618" gid="6212" x="96" y="-96" width="32" height="32"/>
+  <object id="2619" gid="6196" x="96" y="-128" width="32" height="32"/>
+  <object id="2620" gid="6195" x="64" y="-128" width="32" height="32"/>
   <object id="2621" gid="6226" x="224" y="640" width="32" height="32"/>
   <object id="2625" gid="6211" x="256" y="608" width="32" height="32"/>
   <object id="2626" gid="6227" x="256" y="640" width="32" height="32"/>
@@ -8622,9 +8622,6 @@
   <object id="2366" x="-928" y="246" width="128" height="10"/>
   <object id="2403" x="-132" y="-544" width="296" height="306"/>
   <object id="2639" x="4" y="352" width="24" height="112"/>
-  <object id="2667" x="-72" y="-80" width="176" height="48"/>
-  <object id="2668" x="72" y="-96" width="32" height="16"/>
-  <object id="2669" x="-72" y="-96" width="32" height="16"/>
   <object id="2683" x="-128" y="-760" width="16" height="104"/>
   <object id="2684" x="-240" y="-760" width="16" height="104"/>
   <object id="2685" x="256" y="-760" width="16" height="104"/>
@@ -8661,6 +8658,9 @@
   <object id="3430" x="448" y="662" width="224" height="10"/>
   <object id="3434" x="448" y="758" width="128" height="10"/>
   <object id="3435" x="640" y="758" width="128" height="10"/>
+  <object id="3440" x="-72" y="-112" width="176" height="48"/>
+  <object id="3441" x="72" y="-128" width="32" height="16"/>
+  <object id="3442" x="-72" y="-128" width="32" height="16"/>
  </objectgroup>
  <objectgroup id="7" name="Escalators">
   <object id="1974" gid="6009" x="128" y="-640" width="96" height="160">
@@ -8715,11 +8715,11 @@
   </object>
  </objectgroup>
  <objectgroup id="15" name="Receptionists">
-  <object id="2585" gid="6565" x="-32" y="-64" width="32" height="64"/>
-  <object id="2586" gid="6565" x="32" y="-64" width="32" height="64"/>
+  <object id="2585" gid="6565" x="-32" y="-96" width="32" height="64"/>
+  <object id="2586" gid="6565" x="32" y="-96" width="32" height="64"/>
   <object id="2587" gid="6565" x="224" y="608" width="32" height="64"/>
  </objectgroup>
- <objectgroup id="18" name="TeleportZones">
+ <objectgroup id="18" name="TeleportZones" visible="0">
   <object id="2674" x="896" y="0" width="64" height="48">
    <properties>
     <property name="teleportTo" value="A9"/>

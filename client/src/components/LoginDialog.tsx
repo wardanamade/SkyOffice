@@ -147,7 +147,7 @@ export default function LoginDialog() {
   const [nameFieldEmpty, setNameFieldEmpty] = useState<boolean>(false)
   const dispatch = useAppDispatch()
   const videoConnected = useAppSelector((state) => state.user.videoConnected)
-  const roomJoined = useAppSelector((state) => state.room.roomJoined)
+  const gameLaunched = useAppSelector((state) => state.user.gameLaunched)
   const roomName = useAppSelector((state) => state.room.roomName)
   const roomDescription = useAppSelector((state) => state.room.roomDescription)
 
@@ -155,7 +155,7 @@ export default function LoginDialog() {
     event.preventDefault()
     if (name === '') {
       setNameFieldEmpty(true)
-    } else if (roomJoined) {
+    } else if (gameLaunched) {
       console.log('Join! Name:', name, 'Avatar:', avatars[avatarIndex].name)
       dispatch(setMyPlayerProps({ name, texture: avatars[avatarIndex].name }))
       dispatch(pushPlayerJoinedMessage(name))

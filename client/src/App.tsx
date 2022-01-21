@@ -29,7 +29,7 @@ function App() {
   const computerDialogOpen = useAppSelector((state) => state.computer.computerDialogOpen)
   const whiteboardDialogOpen = useAppSelector((state) => state.whiteboard.whiteboardDialogOpen)
   const videoConnected = useAppSelector((state) => state.user.videoConnected)
-  const roomJoined = useAppSelector((state) => state.room.roomJoined)
+  const gameLaunched = useAppSelector((state) => state.user.gameLaunched)
 
   let ui: JSX.Element
   if (loggedIn) {
@@ -49,7 +49,7 @@ function App() {
         </>
       )
     }
-  } else if (roomJoined) {
+  } else if (gameLaunched) {
     /* Render LoginDialog if not logged in but selected a room. */
     ui = <LoginDialog />
   } else {

@@ -15,11 +15,13 @@ export function getInitialBackgroundMode() {
 export const userSlice = createSlice({
   name: 'user',
   initialState: {
+    backgroundMode: getInitialBackgroundMode(),
+    serverConnected: false,
+    videoConnected: false,
+    gameLaunched: false,
+    loggedIn: false,
     name: '',
     texture: '',
-    backgroundMode: getInitialBackgroundMode(),
-    videoConnected: false,
-    loggedIn: false,
     playerNameMap: new Map<string, string>(),
   },
   reducers: {
@@ -44,8 +46,14 @@ export const userSlice = createSlice({
       const bootstrap = phaserGame.scene.keys.bootstrap as Bootstrap
       bootstrap.changeBackgroundMode(newMode)
     },
+    setServerConnected: (state, action: PayloadAction<boolean>) => {
+      state.serverConnected = action.payload
+    },
     setVideoConnected: (state, action: PayloadAction<boolean>) => {
       state.videoConnected = action.payload
+    },
+    setGameLaunched: (state, action: PayloadAction<boolean>) => {
+      state.gameLaunched = action.payload
     },
     logIn: (state) => {
       state.loggedIn = true
@@ -66,7 +74,9 @@ export const userSlice = createSlice({
 export const {
   setMyPlayerProps,
   toggleBackgroundMode,
+  setServerConnected,
   setVideoConnected,
+  setGameLaunched,
   logIn,
   setPlayerNameMap,
   removePlayerNameMap,

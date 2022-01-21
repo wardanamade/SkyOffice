@@ -107,7 +107,7 @@ export default function HelperButtonGroup() {
   const [showControlGuide, setShowControlGuide] = useState(false)
   const [showRoomInfo, setShowRoomInfo] = useState(false)
   const backgroundMode = useAppSelector((state) => state.user.backgroundMode)
-  const roomJoined = useAppSelector((state) => state.room.roomJoined)
+  const gameLaunched = useAppSelector((state) => state.user.gameLaunched)
   const roomName = useAppSelector((state) => state.room.roomName)
   const roomNumber = useAppSelector((state) => state.room.roomNumber)
   const roomDescription = useAppSelector((state) => state.room.roomDescription)
@@ -168,7 +168,7 @@ export default function HelperButtonGroup() {
         )}
       </div>
       <ButtonGroup>
-        {roomJoined && (
+        {gameLaunched && (
           <>
             <Tooltip title="Room Info">
               <StyledFab

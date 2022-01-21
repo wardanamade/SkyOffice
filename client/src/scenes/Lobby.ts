@@ -1,5 +1,7 @@
 import Scene, { ISceneData } from './Scene'
 import network from '../services/Network'
+import store from '../stores'
+import { setIsLobby } from '../stores/RoomStore'
 
 export default class Lobby extends Scene {
   constructor() {
@@ -80,6 +82,8 @@ export default class Lobby extends Scene {
       dom.ignoreDestroy = true
       dom.setPosition(x!, y! - dom.height)
     })
+
+    store.dispatch(setIsLobby(true))
 
     // import other objects from Tiled map to Phaser
     this.addGroupFromTiled('Wall', 'tiles_wall', 'FloorAndGround', false)

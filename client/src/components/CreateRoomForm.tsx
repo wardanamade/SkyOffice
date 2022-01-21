@@ -8,7 +8,6 @@ import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
 
 import { IRoomData } from '../../../types/Rooms'
-import { useAppSelector } from '../hooks'
 
 import network from '../services/Network'
 import phaserGame from '../PhaserGame'
@@ -32,7 +31,6 @@ export const CreateRoomForm = () => {
   const [showPassword, setShowPassword] = useState(false)
   const [nameFieldEmpty, setNameFieldEmpty] = useState(false)
   const [descriptionFieldEmpty, setDescriptionFieldEmpty] = useState(false)
-  const lobbyJoined = useAppSelector((state) => state.room.lobbyJoined)
 
   const handleChange = (prop: keyof IRoomData) => (event: React.ChangeEvent<HTMLInputElement>) => {
     setValues({ ...values, [prop]: event.target.value })
@@ -48,13 +46,13 @@ export const CreateRoomForm = () => {
       setDescriptionFieldEmpty(!descriptionFieldEmpty)
 
     // create custom room if name and description are not empty
-    if (isValidName && isValidDescription && lobbyJoined) {
-      const bootstrap = phaserGame.scene.keys.bootstrap as Bootstrap
-      network
-        .createCustom(values)
-        .then(() => bootstrap.launchGame())
-        .catch((error) => console.error(error))
-    }
+    // if (isValidName && isValidDescription) {
+    //   const bootstrap = phaserGame.scene.keys.bootstrap as Bootstrap
+    //   network
+    //     .createCustom(values)
+    //     .then(() => bootstrap.launchGame())
+    //     .catch((error) => console.error(error))
+    // }
   }
 
   return (

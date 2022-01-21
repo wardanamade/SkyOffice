@@ -1,29 +1,31 @@
 {
-    "A1":{
-        "colorTheme": "#c8dfca"
-    },
-    "A2":{
-        "colorTheme": "#b4bac7"
-    },
-    "A3":{
-        "colorTheme": "#f0d793"
-    },
-    "A4":{
-        "colorTheme": "#c4dbe3"
-    },
-    "A5":{
-        "colorTheme": "#86b8df"
-    },
-    "A6":{
-        "colorTheme": "#8185c1"
-    },
-    "A7":{
-        "colorTheme": "#ddaca4"
-    },
-    "A8":{
-        "colorTheme": "#be5e50"
-    },
-    "A9":{
-        "colorTheme": "#c3a88d"
-    }
+    "room":{
+        "A1":{
+            "colorTheme": "#c8dfca"
+        },
+        "A2":{
+            "colorTheme": "#b4bac7"
+        },
+        "A3":{
+            "colorTheme": "#f0d793"
+        },
+        "A4":{
+            "colorTheme": "#c4dbe3"
+        },
+        "A5":{
+            "colorTheme": "#86b8df"
+        },
+        "A6":{
+            "colorTheme": "#8185c1"
+        },
+        "A7":{
+            "colorTheme": "#ddaca4"
+        },
+        "A8":{
+            "colorTheme": "#be5e50"
+        },
+        "A9":{
+            "colorTheme": "#c3a88d"
+        }
+    } 
 }

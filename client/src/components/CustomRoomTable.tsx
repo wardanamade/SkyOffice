@@ -90,19 +90,19 @@ export const CustomRoomTable = () => {
   const [showPasswordDialog, setShowPasswordDialog] = useState(false)
   const [showPasswordError, setShowPasswordError] = useState(false)
   const [passwordFieldEmpty, setPasswordFieldEmpty] = useState(false)
-  const lobbyJoined = useAppSelector((state) => state.room.lobbyJoined)
+  const serverConnected = useAppSelector((state) => state.user.serverConnected)
   const availableRooms = useAppSelector((state) => state.room.availableRooms)
 
   const handleJoinClick = (roomId: string, password: string | null) => {
-    if (!lobbyJoined) return
-    const bootstrap = phaserGame.scene.keys.bootstrap as Bootstrap
-    network
-      .joinCustomById(roomId, password)
-      .then(() => bootstrap.launchGame())
-      .catch((error) => {
-        console.error(error)
-        if (password) setShowPasswordError(true)
-      })
+    if (!serverConnected) return
+    // const bootstrap = phaserGame.scene.keys.bootstrap as Bootstrap
+    // network
+    //   .joinCustomById(roomId, password)
+    //   .then(() => bootstrap.launchGame())
+    //   .catch((error) => {
+    //     console.error(error)
+    //     if (password) setShowPasswordError(true)
+    //   })
   }
 
   const handlePasswordSubmit = (event: React.FormEvent<HTMLFormElement>) => {

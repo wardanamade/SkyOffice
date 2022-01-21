@@ -6,9 +6,8 @@ import { ItemType } from '../../../types/Items'
 import WebRTC from '../web/WebRTC'
 import { Event } from '../events/EventCenter'
 import store from '../stores'
-import { setPlayerNameMap, removePlayerNameMap } from '../stores/UserStore'
+import { setServerConnected, setPlayerNameMap, removePlayerNameMap } from '../stores/UserStore'
 import {
-  setLobbyJoined,
   setJoinedRoomData,
   setAvailableRooms,
   addAvailableRooms,
@@ -40,7 +39,7 @@ class Network {
     this.events = new Phaser.Events.EventEmitter()
 
     this.joinColyseusLobbyRoom().then(() => {
-      store.dispatch(setLobbyJoined(true))
+      store.dispatch(setServerConnected(true))
       this.webRTCId = this.lobby.sessionId
       this.webRTC = new WebRTC(this.webRTCId)
     })

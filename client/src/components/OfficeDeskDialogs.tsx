@@ -11,13 +11,7 @@ import GithubIcon from '../assets/icons/Github.png'
 import MessageIcon from '../assets/icons/Messages.png'
 import logo from '../assets/logo.png'
 import config from '../config.json'
-
-// Create an array with strings from 'A1' to 'A9', which is used
-// to generate office dialog components for each office space below
-const officeRooms: string[] = []
-for (let i = 1; i < 10; i++) {
-  officeRooms.push(`A${i}`)
-}
+import { useAppSelector } from '../hooks'
 
 const Wrapper = styled.div`
   display: none;
@@ -37,6 +31,10 @@ const Wrapper = styled.div`
     width: 18px;
     height: 18px;
     font-size: 11px;
+  }
+
+  .skyoffice-header {
+    background: #93cbee75;
   }
 `
 
@@ -100,33 +98,41 @@ const SocialLinkWrapper = styled.div`
 `
 
 export default function OfficeDeskDialogs() {
+  const isLobby = useAppSelector((state) => state.room.isLobby)
   return (
     <>
-      {officeRooms.map((roomNumber, i) => (
-        <Wrapper id={`dialog-${roomNumber}`} key={roomNumber}>
-          <Header style={{ background: config[roomNumber].colorTheme + '75' }}>
-            <Avatar className="avatar" style={{ background: config[roomNumber].colorTheme }}>
-              {roomNumber}
-            </Avatar>
-            <p className="title">Office {roomNumber}</p>
-          </Header>
-          <StatusBar>AVAILABLE</StatusBar>
-          <Description>
-            <span className="number">3</span>
-            <img src={WhiteboardIcon} alt="whiteboard" />
-            <span className="number">&bull; 5</span>
-            <img src={ComputerIcon} alt="computer" />
-            <span className="number">&bull; 5-10</span>
-            <img src={UserIcon} alt="user" />
-          </Description>
-          <Button variant="outlined" color="primary" size="small" startIcon={<AddBusinessIcon />}>
-            Claim the space
-          </Button>
-        </Wrapper>
-      ))}
+      {Object.keys(config.room).map((roomNumber, i) => {
+        const colorTheme = config.room[roomNumber].colorTheme
+        return (
+          <Wrapper
+            id={`dialog-${roomNumber}`}
+            key={roomNumber}
+            style={{ display: isLobby ? 'block' : 'none' }}
+          >
+            <Header style={{ background: colorTheme + '75' }}>
+              <Avatar className="avatar" style={{ background: colorTheme }}>
+                {roomNumber}
+              </Avatar>
+              <p className="title">Office {roomNumber}</p>
+            </Header>
+            <StatusBar>AVAILABLE</StatusBar>
+            <Description>
+              <span className="number">3</span>
+              <img src={WhiteboardIcon} alt="whiteboard" />
+              <span className="number">&bull; 5</span>
+              <img src={ComputerIcon} alt="computer" />
+              <span className="number">&bull; 5-10</span>
+              <img src={UserIcon} alt="user" />
+            </Description>
+            <Button variant="outlined" color="primary" size="small" startIcon={<AddBusinessIcon />}>
+              Claim the space
+            </Button>
+          </Wrapper>
+        )
+      })}
       {/* The following is the Office profile dialog for SkyOffice HQ :) */}
-      <Wrapper id={`dialog-skyoffice`}>
-        <Header style={{ background: '#c4dbe375' }}>
+      <Wrapper id={`dialog-skyoffice`} style={{ display: isLobby ? 'block' : 'none' }}>
+        <Header className="skyoffice-header">
           <Avatar className="avatar" alt="SkyOffice" src={logo} />
           <p className="title">SkyOffice HQ</p>
         </Header>

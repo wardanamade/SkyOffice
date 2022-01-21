@@ -16,19 +16,15 @@ const isOfficeRoom = (room: RoomInterface) => {
 export const roomSlice = createSlice({
   name: 'room',
   initialState: {
-    lobbyJoined: false,
-    roomJoined: false,
+    isLobby: false,
     roomName: '',
     roomNumber: '',
     roomDescription: '',
     availableRooms: new Array<RoomAvailable>(),
   },
   reducers: {
-    setLobbyJoined: (state, action: PayloadAction<boolean>) => {
-      state.lobbyJoined = action.payload
-    },
-    setRoomJoined: (state, action: PayloadAction<boolean>) => {
-      state.roomJoined = action.payload
+    setIsLobby: (state, action: PayloadAction<boolean>) => {
+      state.isLobby = action.payload
     },
     setJoinedRoomData: (
       state,
@@ -59,8 +55,7 @@ export const roomSlice = createSlice({
 })
 
 export const {
-  setLobbyJoined,
-  setRoomJoined,
+  setIsLobby,
   setJoinedRoomData,
   setAvailableRooms,
   addAvailableRooms,

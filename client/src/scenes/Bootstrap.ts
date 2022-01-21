@@ -1,13 +1,15 @@
 import Phaser from 'phaser'
 import { BackgroundMode } from '../../../types/BackgroundMode'
+import { SpawnLocation } from '../../../types/Scenes'
 import Lobby from './Lobby'
 import Office from './Office'
 import TeleportZone from '../zones/TeleportZone'
 
 import network from '../services/Network'
 import store from '../stores'
-import { setRoomJoined } from '../stores/RoomStore'
+import { setGameLaunched } from '../stores/UserStore'
 import { resetChat } from '../stores/ChatStore'
+import { setIsLobby } from '../stores/RoomStore'
 
 export default class Bootstrap extends Phaser.Scene {
   currentScene?: Office | Lobby
@@ -117,18 +119,26 @@ export default class Bootstrap extends Phaser.Scene {
     this.scene.launch('background', { backgroundMode })
   }
 
-  launchGame() {
-    if (!this.preloadComplete) return
-    this.scene.launch('lobby', { onLeave: this.handleEnterOffice })
-    this.currentScene = this.scene.get('lobby') as Lobby
-
-    store.dispatch(setRoomJoined(true))
-    network.webRTC?.checkPreviousPermission()
-  }
-
   changeBackgroundMode(backgroundMode: BackgroundMode) {
     this.scene.stop('background')
     this.launchBackground(backgroundMode)
+  }
+
+  launchGame(spawnLocation: SpawnLocation) {
+    if (!this.preloadComplete) return
+
+    // set spawn position based on spawnLocation
+    let enterX = Phaser.Math.Between(-64, 64)
+    let enterY = Phaser.Math.Between(-32, 32)
+    if (spawnLocation === SpawnLocation.DEMO_AREA) {
+      enterX += 240
+      enterY += 664
+    }
+    this.scene.launch('lobby', { onLeave: this.handleEnterOffice, enterX, enterY })
+    this.currentScene = this.scene.get('lobby') as Lobby
+
+    store.dispatch(setGameLaunched(true))
+    network.webRTC?.checkPreviousPermission()
   }
 
   private handleEnterLobby = async () => {
@@ -142,6 +152,7 @@ export default class Bootstrap extends Phaser.Scene {
   }
 
   private handleEnterOffice = async (teleportZone: TeleportZone) => {
+    // store previous lobby position for re-entry
     this.lobbyReturnPosition = teleportZone.getBottomCenter()
 
     this.scene.stop('lobby')
@@ -152,5 +163,6 @@ export default class Bootstrap extends Phaser.Scene {
       teleportTo: teleportZone.teleportTo,
     })
     this.currentScene = this.scene.get('office') as Office
+    store.dispatch(setIsLobby(false))
   }
 }
